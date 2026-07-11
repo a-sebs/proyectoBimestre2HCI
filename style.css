@@ -1,0 +1,540 @@
+/* ==========================================================================
+   LMS Simulador — Sistema de Diseño Accesible
+   Basado en principios de diseño centrado en el usuario, alto contraste, 
+   aprendizaje visual y baja carga cognitiva.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Paleta de Colores (Accesible - Contraste AA) */
+  --bg-app: #FBF8F2; /* Crema cálido - reduce fatiga visual */
+  --bg-surface: #FFFFFF; /* Blanco puro para tarjetas */
+  --bg-spotlight: rgba(27, 36, 48, 0.85); /* Oscurecimiento para simulación */
+  
+  --text-main: #1B2430; /* Casi negro para máximo contraste */
+  --text-muted: #566072; /* Gris oscuro para textos secundarios */
+  
+  --color-primary: #205C6B; /* Teal - estructura */
+  --color-primary-dark: #143C46;
+  --color-primary-tint: #E4EFF0;
+  
+  --color-action: #FF6B4A; /* Coral - llamadas a la acción */
+  --color-action-dark: #E5502F;
+  --color-action-tint: #FFEBE4;
+  
+  --color-highlight: #8B5CF6; /* Violeta - elementos lúdicos (niños) */
+  --color-highlight-dark: #6D3EE0;
+  --color-highlight-tint: #F0EAFE;
+  
+  /* Estados Semánticos (No decorativos) */
+  --state-success: #2E9F63;
+  --state-success-bg: #E5F6EC;
+  
+  --state-warning: #D99A1F;
+  --state-warning-bg: #FCF0D8;
+  
+  --state-error: #D9524F;
+  --state-error-bg: #FBE7E6;
+
+  /* Bordes */
+  --border-color: #E4DFD3;
+  --border-strong: #D3CBB8;
+
+  /* Tipografía */
+  --font-display: 'Baloo 2', system-ui, sans-serif; /* Títulos amigables */
+  --font-body: 'Inter', system-ui, sans-serif; /* Cuerpos legibles */
+
+  /* Espaciado y Radios (Base 8px) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  /* Sombras */
+  --shadow-card: 0 4px 12px rgba(27, 36, 48, 0.08);
+  --shadow-float: 0 12px 32px rgba(32, 92, 107, 0.15);
+}
+
+/* ==========================================================================
+   Reseteo y Estilos Base
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-app);
+  font-family: var(--font-body);
+  color: var(--text-main);
+  font-size: 16px; /* Tipografía mínima accesible 16px */
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-md);
+}
+
+/* Contenedor principal estilo App */
+.app-container {
+  width: 100%;
+  max-width: 480px; /* Ancho máximo para mantener control en desktop */
+  height: 90vh; /* Ocupar casi toda la pantalla */
+  min-height: 600px;
+  max-height: 900px;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid var(--border-color);
+}
+
+.screen-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Variantes de alineación de pantalla */
+.screen-content.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Tipografía
+   ========================================================================== */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+h1 { font-size: 32px; font-weight: 800; }
+h2 { font-size: 24px; font-weight: 700; }
+h3 { font-size: 20px; font-weight: 700; }
+
+.text-large { font-size: 18px; }
+.text-base { font-size: 16px; }
+.text-small { font-size: 14px; font-weight: 600; }
+.text-muted { color: var(--text-muted); }
+
+/* ==========================================================================
+   Componentes: Botones
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: 18px; /* Texto grande para legibilidad */
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-md) var(--space-lg);
+  min-height: 56px; /* Área de toque accesible */
+  border-radius: var(--radius-pill);
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+/* Estados de foco accesibles */
+.btn:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 3px solid var(--color-highlight);
+  outline-offset: 3px;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background-color: var(--color-action);
+  color: white;
+  box-shadow: 0 8px 16px rgba(255, 107, 74, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-action-dark);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary-tint);
+}
+
+.btn-outline {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  border: 2px solid var(--border-color);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-tint);
+}
+
+/* ==========================================================================
+   Componentes: Tarjetas (Cards)
+   ========================================================================== */
+.card {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  width: 100%;
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-highlight);
+  box-shadow: var(--shadow-float);
+}
+
+.card-icon {
+  font-size: 48px;
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Componentes: Barra de Progreso
+   ========================================================================== */
+.progress-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 12px;
+  background-color: var(--border-color);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-action);
+  border-radius: var(--radius-pill);
+  transition: width 0.5s ease;
+}
+
+/* ==========================================================================
+   Componentes: Avatar Guía & Burbujas
+   ========================================================================== */
+.guide-container {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-md);
+  margin-top: auto; /* Empujar abajo */
+  width: 100%;
+}
+
+.guide-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--color-primary-tint);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.guide-bubble {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 4px;
+  padding: var(--space-md);
+  font-size: 16px;
+  box-shadow: var(--shadow-card);
+  flex-grow: 1;
+}
+
+/* ==========================================================================
+   Componentes: Simulador Overlay (Spotlight)
+   ========================================================================== */
+.simulator-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-spotlight);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-xl);
+  pointer-events: none; /* Dejar pasar clics */
+}
+
+/* Contenedor ficticio que hace de LMS de fondo */
+.fake-lms {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #f0f0f0;
+  padding: var(--space-md);
+  /* El oscurecimiento ahora lo hace exclusivamente el overlay/spotlight */
+}
+
+.fake-header {
+  height: 50px;
+  background-color: white;
+  margin-bottom: var(--space-md);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-md);
+}
+
+.fake-sidebar {
+  width: 80px;
+  height: calc(100% - 66px);
+  background-color: white;
+  border-radius: var(--radius-sm);
+  float: left;
+}
+
+/* Elemento resaltado en el simulador */
+.spotlight-element {
+  position: relative;
+  z-index: 20;
+  background-color: white;
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  box-shadow: 0 0 0 4px var(--color-highlight), 0 10px 25px rgba(0,0,0,0.2);
+  pointer-events: auto; /* Habilitar interacción */
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(139, 92, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+}
+
+.simulator-helper {
+  position: relative;
+  z-index: 20;
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  pointer-events: auto;
+}
+
+.simulator-arrow {
+  font-size: 40px;
+  color: var(--color-highlight);
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ==========================================================================
+   Componentes: Insignias y Logros
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.badge-success { background: var(--state-success-bg); color: var(--state-success); }
+.badge-warning { background: var(--state-warning-bg); color: var(--state-warning); }
+
+.badge-big {
+  width: 100px;
+  height: 100px;
+  background-color: var(--color-highlight-tint);
+  border: 4px solid var(--color-highlight);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Layouts y Utilidades
+   ========================================================================== */
+.stack { display: flex; flex-direction: column; gap: var(--space-md); }
+.stack-lg { display: flex; flex-direction: column; gap: var(--space-xl); }
+.row { display: flex; flex-direction: row; align-items: center; gap: var(--space-md); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-md); }
+
+.text-center { text-align: center; }
+.mt-auto { margin-top: auto; }
+.mb-lg { margin-bottom: var(--space-lg); }
+
+/* Ilustraciones vectoriales (placeholders) */
+.illustration {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: var(--color-primary-tint);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+}
+
+/* Topbar navegacional */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.icon-btn:hover { background-color: var(--color-primary-tint); }
+
+/* Timeline Mapa */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 20px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 35px;
+  width: 4px;
+  background-color: var(--border-color);
+  z-index: 0;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-node {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--bg-surface);
+  border: 4px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.timeline-item.completed .timeline-node {
+  background-color: var(--state-success);
+  border-color: var(--state-success);
+  color: white;
+}
+
+.timeline-item.active .timeline-node {
+  background-color: var(--bg-surface);
+  border-color: var(--color-highlight);
+  color: var(--color-highlight);
+}
+
+.timeline-content {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  flex-grow: 1;
+}
+
+.timeline-item.active .timeline-content {
+  border-color: var(--color-highlight);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}

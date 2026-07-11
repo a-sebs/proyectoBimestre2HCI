@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación - LMS Simulador</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="content-5-8.js"></script>
+    <script src="content-9-12.js"></script>
+    <script src="content-13-15.js"></script>
+    <script src="engine.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen-content center">
+            <div class="topbar w-full" style="width: 100%;">
+                <a href="03-seleccionar-edad.html" class="icon-btn" aria-label="Volver">⬅️</a>
+                <h2 id="p-title"></h2>
+            </div>
+            
+            <div class="illustration" id="p-illustration"></div>
+
+            <div class="card stack mt-lg text-center">
+                <h3>Lo que aprenderemos hoy</h3>
+                <div class="grid-2 mt-md">
+                    <div class="stack" style="gap: var(--space-xs)">
+                        <div class="text-large font-display" style="color: var(--color-primary)" id="p-subtitle"></div>
+                    </div>
+                    <div class="stack" style="gap: var(--space-xs)">
+                        <div class="text-large font-display" style="color: var(--color-primary)" id="p-time"></div>
+                        <div class="text-small text-muted">Tiempo</div>
+                    </div>
+                </div>
+                
+                <div class="progress-container mt-md">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 0%;"></div>
+                    </div>
+                    <span class="text-small text-muted" style="align-self: flex-start">Progreso: 0%</span>
+                </div>
+            </div>
+
+            <a href="05-mapa.html" class="btn btn-primary mt-auto" id="p-btn"></a>
+        </div>
+    </div>
+</body>
+</html>

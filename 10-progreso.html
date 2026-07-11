@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progreso - LMS Simulador</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="content-5-8.js"></script>
+    <script src="content-9-12.js"></script>
+    <script src="content-13-15.js"></script>
+    <script src="engine.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen-content center">
+            <h2 class="mt-md" id="p-title"></h2>
+            
+            <div class="illustration" style="height: 140px; font-size: 80px; background: transparent;" id="p-ill">
+                📈
+            </div>
+            
+            <div class="card stack text-center mt-md">
+                <div class="progress-container">
+                    <div class="progress-bar-bg" style="height: 20px;">
+                        <div class="progress-bar-fill" style="width: 25%;"></div>
+                    </div>
+                    <span class="text-small text-muted" id="p-comp"></span>
+                </div>
+                
+                <div class="grid-2 mt-md" id="p-metrics">
+                    <!-- Metrics inyectadas por JS -->
+                </div>
+            </div>
+
+            <div class="guide-container mt-auto" id="engine-avatar"></div>
+
+            <div class="grid-2 w-full mt-md">
+                <a href="05-mapa.html" class="btn btn-outline">Ver Mapa</a>
+                <a href="11-final.html" class="btn btn-primary" id="p-btn">Siguiente Módulo</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

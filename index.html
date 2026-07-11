@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splash Screen - LMS Simulador</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .splash-logo {
+            font-size: 80px;
+            animation: bounceIn 1.5s ease-out;
+        }
+        .splash-title {
+            animation: fadeIn 2s ease-in;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen-content center">
+            <div class="splash-logo">🧑‍🎓💻</div>
+            <h1 class="splash-title mt-lg">EduSimulador</h1>
+            <p class="text-muted text-large mt-sm">Aprende sin límites</p>
+        </div>
+    </div>
+    
+    <!-- Redirección automática simulada con JS -->
+    <script>
+        setTimeout(() => {
+            window.location.href = '02-bienvenida.html';
+        }, 3000);
+    </script>
+</body>
+</html>

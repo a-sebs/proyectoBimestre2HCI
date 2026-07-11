@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación - LMS Simulador</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="content-5-8.js"></script>
+    <script src="content-9-12.js"></script>
+    <script src="content-13-15.js"></script>
+    <script src="engine.js"></script>
+</head>
+<body>
+    <div class="app-container" style="position: relative;">
+        <!-- Falso LMS de fondo (Hardcoded structure para el prototipo visual) -->
+        <div class="fake-lms">
+            <div class="fake-header">
+                <div style="width: 120px; height: 20px; background: #ddd; border-radius: 4px;"></div>
+            </div>
+            <div class="fake-sidebar"></div>
+            
+            <div style="margin-left: 100px; max-width: 300px; margin-top: 50px;">
+                <h2 style="margin-bottom: 20px;">Iniciar Sesión</h2>
+                <div style="display: flex; flex-direction: column; gap: 15px;" id="target-login-form" class="sim-target">
+                    <div style="position: relative; z-index: 0;" class="sim-target" id="target-username-field">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Usuario</label>
+                        <input type="text" id="target-username" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" disabled>
+                    </div>
+                    
+                    <div class="sim-target" id="target-password-field">
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Contraseña</label>
+                        <input type="password" id="target-password" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" disabled>
+                    </div>
+                    
+                    <button class="sim-target" id="target-btn-login" style="padding: 12px; background: #0056b3; color: white; border: none; border-radius: 4px; font-weight: bold;">Entrar al curso</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Capa oscurecida y resaltado, manipulada por Engine JS -->
+        <div class="simulator-overlay" id="sim-overlay">
+            <div class="simulator-helper" id="sim-helper" style="margin-top: 150px; margin-left: 80px;">
+                <!-- Engine inyecta botones clickeables aquí -->
+            </div>
+            
+            <div class="guide-container" id="engine-avatar"></div>
+        </div>
+    </div>
+</body>
+</html>
