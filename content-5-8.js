@@ -93,5 +93,33 @@ const content_5_8 = {
         ],
         avatarMessage: "¡Qué emoción! ¿Vamos al siguiente juego?",
         nextButtonText: "Siguiente juego"
+    },
+    aulas: {
+        title: "Mis Salones",
+        avatarMessage: "¡Aquí están tus salones! Toca el que tiene una tarea para ti.",
+        courses: [
+            { name: "Salón de Números", icon: "🔢", hasTask: false },
+            { name: "Salón de Letras", icon: "🔤", hasTask: false },
+            { name: "Salón de Arte", icon: "🎨", hasTask: true },
+            { name: "Salón de Juegos", icon: "🧩", hasTask: false }
+        ],
+        noTaskMessage: "¡Aquí no hay tareas todavía! 😊"
+    },
+    tarea: {
+        courseName: "Salón de Arte",
+        title: "¡Sube tu dibujo!",
+        description: "Tu maestra quiere ver el dibujo que hiciste en casa. Toca el botón y elige tu dibujo.",
+        uploadLabel: "Elegir mi dibujo",
+        submitButtonText: "¡Enviar!",
+        avatarMessage: "Toca el botón azul para elegir tu dibujo desde tu computador."
+    },
+    tareaExito: {
+        title: "¡Lo lograste!",
+        subtitle: "Tu maestra recibió tu dibujo.",
+        badgeIcon: "🎨",
+        badgeName: "Artista Estrella",
+        badgeDesc: "¡Entregaste tu primera tarea!",
+        avatarMessage: "¡Estoy muy orgulloso de ti!",
+        confetti: true
     }
 };

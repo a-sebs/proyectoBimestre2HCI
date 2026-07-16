@@ -68,5 +68,33 @@ const content_13_15 = {
         ],
         avatarMessage: "Módulo finalizado. Procede al siguiente apartado.",
         nextButtonText: "Siguiente Módulo"
+    },
+    aulas: {
+        title: "Aulas Virtuales",
+        avatarMessage: "",
+        courses: [
+            { name: "Matemática Avanzada", icon: "📊", hasTask: false },
+            { name: "Lengua y Literatura", icon: "📖", hasTask: false },
+            { name: "Física", icon: "⚛️", hasTask: true },
+            { name: "Inglés Técnico", icon: "🗣️", hasTask: false }
+        ],
+        noTaskMessage: "No hay asignaciones pendientes en esta aula."
+    },
+    tarea: {
+        courseName: "Física",
+        title: "Asignación: Informe de Laboratorio",
+        description: "Adjunta el documento con tu informe de laboratorio en formato PDF o Word.",
+        uploadLabel: "Adjuntar archivo",
+        submitButtonText: "Enviar asignación",
+        avatarMessage: ""
+    },
+    tareaExito: {
+        title: "Asignación Enviada",
+        subtitle: "Tu archivo fue entregado correctamente.",
+        badgeIcon: "✅",
+        badgeName: "Entrega Verificada",
+        badgeDesc: "Competencia de gestión de tareas adquirida",
+        avatarMessage: "",
+        confetti: false
     }
 };

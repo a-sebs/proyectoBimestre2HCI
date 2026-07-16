@@ -538,3 +538,49 @@ h3 { font-size: 20px; font-weight: 700; }
   border-color: var(--color-highlight);
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
 }
+
+/* ==========================================================================
+   Módulo 2: Aulas Virtuales — Toast y Carga de Archivos
+   ========================================================================== */
+.engine-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(20px);
+  background-color: var(--color-primary-dark);
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: var(--shadow-float);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 200;
+  max-width: 90%;
+  text-align: center;
+}
+
+.engine-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.upload-zone {
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+  background-color: var(--bg-surface);
+}
+
+.upload-zone input[type="file"] {
+  display: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}

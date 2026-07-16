@@ -75,5 +75,33 @@ const content_9_12 = {
         ],
         avatarMessage: "Avanzas a buen ritmo. ¿Continuamos?",
         nextButtonText: "Siguiente módulo"
+    },
+    aulas: {
+        title: "Mis Cursos",
+        avatarMessage: "Estos son tus cursos activos. Ingresa al que tiene una tarea pendiente.",
+        courses: [
+            { name: "Matemáticas", icon: "📐", hasTask: false },
+            { name: "Lengua y Literatura", icon: "📖", hasTask: false },
+            { name: "Ciencias Naturales", icon: "🌱", hasTask: true },
+            { name: "Inglés", icon: "🗣️", hasTask: false }
+        ],
+        noTaskMessage: "Este curso no tiene tareas pendientes por ahora."
+    },
+    tarea: {
+        courseName: "Ciencias Naturales",
+        title: "Tarea: Mi experimento",
+        description: "Sube una foto o documento con los resultados de tu experimento de la semilla.",
+        uploadLabel: "Seleccionar archivo",
+        submitButtonText: "Entregar tarea",
+        avatarMessage: "Selecciona el archivo desde tu computador y luego presiona Entregar."
+    },
+    tareaExito: {
+        title: "¡Tarea entregada!",
+        subtitle: "Tu profesor revisará tu trabajo pronto.",
+        badgeIcon: "📤",
+        badgeName: "Insignia de Responsabilidad",
+        badgeDesc: "Entregaste tu tarea a tiempo",
+        avatarMessage: "¡Buen trabajo! Ya puedes revisar tus otros cursos.",
+        confetti: false
     }
 };

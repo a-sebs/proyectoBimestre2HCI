@@ -64,15 +64,20 @@ const Engine = {
         const container = document.getElementById('m-container');
         container.innerHTML = ""; // Limpiar
 
+        // El módulo 1 (login) siempre lleva a 06-modulo-intro.html;
+        // a partir del módulo 2 (aulas/tareas) el destino es 12-aulas.html y ya no está bloqueado.
+        const linkFor = (mod) => mod.id === 1 ? '06-modulo-intro.html' : '12-aulas.html';
+        const isLocked = (mod) => mod.status === 'locked' && mod.id !== 2;
+
         if (data.type === 'trail') {
             // Estilo 5-8: Sendero Vertical
             let html = '<div class="timeline mt-md">';
             data.modules.forEach(mod => {
-                let statusClass = mod.status === 'active' ? 'active' : '';
+                let statusClass = (mod.status === 'active' || mod.id === 2) ? 'active' : '';
                 html += `
                 <div class="timeline-item ${statusClass}">
                     <div class="timeline-node">${mod.id}</div>
-                    <a href="06-modulo-intro.html" class="timeline-content card-interactive" style="text-decoration: none; color: inherit; ${mod.status === 'locked' ? 'opacity:0.6; pointer-events:none;' : ''}">
+                    <a href="${linkFor(mod)}" class="timeline-content card-interactive" style="text-decoration: none; color: inherit; ${isLocked(mod) ? 'opacity:0.6; pointer-events:none;' : ''}">
                         <h3 style="color: var(--color-primary)">${mod.title}</h3>
                         <div class="text-large mt-sm">${mod.icon}</div>
                     </a>
@@ -86,7 +91,7 @@ const Engine = {
             let html = '<div class="stack mt-md">';
             data.modules.forEach(mod => {
                 html += `
-                <a href="06-modulo-intro.html" class="card card-interactive" style="text-decoration: none; color: inherit; ${mod.status === 'locked' ? 'opacity:0.6; pointer-events:none;' : ''}">
+                <a href="${linkFor(mod)}" class="card card-interactive" style="text-decoration: none; color: inherit; ${isLocked(mod) ? 'opacity:0.6; pointer-events:none;' : ''}">
                     <h3 style="color: var(--color-primary)">${mod.id}. ${mod.title}</h3>
                     <p class="text-small text-muted mt-sm">${mod.description}</p>
                 </a>`;
@@ -102,13 +107,14 @@ const Engine = {
                 <div class="stack">
             `;
             data.modules.forEach(mod => {
+                const active = mod.status === 'active' || mod.id === 2;
                 html += `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding: 10px; background: ${mod.status === 'active' ? '#f5f9fa' : '#fff'}; border-left: 4px solid ${mod.status === 'active' ? 'var(--color-primary)' : '#ddd'};">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding: 10px; background: ${active ? '#f5f9fa' : '#fff'}; border-left: 4px solid ${active ? 'var(--color-primary)' : '#ddd'};">
                     <div>
                         <strong style="color:var(--color-primary); font-size: 14px;">Módulo ${mod.id}: ${mod.title}</strong>
                         <p class="text-small text-muted" style="margin:0;">${mod.description}</p>
                     </div>
-                    <a href="06-modulo-intro.html" class="btn btn-sm btn-outline" style="min-height:30px; font-size:12px; padding: 5px 10px; ${mod.status === 'locked' ? 'opacity:0.5; pointer-events:none;' : ''}">Acceder</a>
+                    <a href="${linkFor(mod)}" class="btn btn-sm btn-outline" style="min-height:30px; font-size:12px; padding: 5px 10px; ${isLocked(mod) ? 'opacity:0.5; pointer-events:none;' : ''}">Acceder</a>
                 </div>`;
             });
             html += '</div></div>';
@@ -323,6 +329,99 @@ const Engine = {
                 <div class="text-small text-muted">${m.label}</div>
             </div>`;
         });
+    },
+
+    // Módulo 2: Aulas Virtuales
+    renderAulas: function () {
+        const data = this.content.aulas;
+        document.getElementById('au-title').innerText = data.title;
+        this.renderAvatar(data.avatarMessage);
+
+        const container = document.getElementById('au-container');
+        container.innerHTML = "";
+
+        data.courses.forEach(course => {
+            const card = document.createElement('div');
+            card.className = 'card card-interactive';
+            card.innerHTML = `
+                <div class="row" style="justify-content: space-between;">
+                    <div class="row">
+                        <div class="text-large">${course.icon}</div>
+                        <h3>${course.name}</h3>
+                    </div>
+                    ${course.hasTask ? '<span class="badge badge-warning">1 tarea</span>' : ''}
+                </div>
+            `;
+            card.onclick = () => {
+                if (course.hasTask) {
+                    window.location.href = '13-tarea.html';
+                } else {
+                    Engine.showToast(data.noTaskMessage);
+                }
+            };
+            container.appendChild(card);
+        });
+    },
+
+    showToast: function (msg) {
+        let toast = document.getElementById('engine-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'engine-toast';
+            toast.className = 'engine-toast';
+            document.body.appendChild(toast);
+        }
+        toast.innerText = msg;
+        toast.classList.add('show');
+        clearTimeout(this._toastTimeout);
+        this._toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+    },
+
+    // Módulo 2: Entrega de Tarea
+    renderTarea: function () {
+        const data = this.content.tarea;
+        document.getElementById('t-course').innerText = data.courseName;
+        document.getElementById('t-title').innerText = data.title;
+        document.getElementById('t-desc').innerText = data.description;
+        document.getElementById('t-upload-label').innerText = data.uploadLabel;
+        document.getElementById('t-submit').innerText = data.submitButtonText;
+        this.renderAvatar(data.avatarMessage);
+
+        const fileInput = document.getElementById('t-file-input');
+        const fileNameEl = document.getElementById('t-file-name');
+        const submitBtn = document.getElementById('t-submit');
+        submitBtn.disabled = true;
+
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                fileNameEl.innerText = "📎 " + fileInput.files[0].name;
+                fileNameEl.style.display = 'block';
+                submitBtn.disabled = false;
+            }
+        };
+
+        submitBtn.onclick = () => {
+            if (!submitBtn.disabled) window.location.href = '14-tarea-exito.html';
+        };
+    },
+
+    // Módulo 2: Confirmación de Entrega
+    renderTareaExito: function () {
+        const data = this.content.tareaExito;
+        document.getElementById('te-title').innerText = data.title;
+        document.getElementById('te-subtitle').innerText = data.subtitle;
+        document.getElementById('te-badge-icon').innerText = data.badgeIcon;
+        document.getElementById('te-badge-name').innerText = data.badgeName;
+        document.getElementById('te-badge-desc').innerText = data.badgeDesc;
+        this.renderAvatar(data.avatarMessage);
+
+        const confetti = document.getElementById('te-confetti');
+        if (data.confetti) {
+            confetti.style.display = 'block';
+            confetti.innerText = '🎉';
+        } else {
+            confetti.style.display = 'none';
+        }
     }
 };
 
@@ -338,4 +437,7 @@ window.onload = () => {
     if (document.getElementById('a-title')) Engine.renderActividad();
     if (document.getElementById('r-title')) Engine.renderRetro();
     if (document.getElementById('p-metrics') && window.location.pathname.includes('progreso')) Engine.renderProgreso();
+    if (document.getElementById('au-title')) Engine.renderAulas();
+    if (document.getElementById('t-title')) Engine.renderTarea();
+    if (document.getElementById('te-title')) Engine.renderTareaExito();
 };
